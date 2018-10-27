@@ -19,6 +19,9 @@ for line in lines:
     angle = float(line[3])
     images.append(image)
     angles.append(angle)
+    image_flipped = np.fliplr(image)
+    images.append(image_flipped)
+    angles.append(-angle)
 
 X_train = np.array(images)
 y_train = np.array(angles)
