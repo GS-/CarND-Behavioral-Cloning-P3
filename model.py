@@ -30,9 +30,9 @@ from keras.layers.pooling import MaxPooling2D
 
 model = Sequential()
 model.add(Lambda(lambda x: (x / 255.0) - 0.5, input_shape=(160, 320, 3)))
-model.add(Conv2D(32, 3, 3, activation='relu'))
+model.add(Conv2D(filters=32, kernel_size=(3,3), activation='relu'))
 model.add(MaxPooling2D())
-model.add(Conv2D(32, 3, 3, activation='relu'))
+model.add(Conv2D(filters=32, kernel_size=(3,3), activation='relu'))
 model.add(MaxPooling2D())
 model.add(Flatten())
 model.add(Dense(1))
@@ -46,10 +46,9 @@ model.compile(
 history = model.fit(
     X_train,
     y_train,
-    #epochs=3,
+    epochs=5,
     validation_split=0.2,
     shuffle=True,
-    nb_epoch=9,
 )
 
 model.save('model.h5')
