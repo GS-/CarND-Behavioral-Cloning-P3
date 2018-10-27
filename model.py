@@ -28,11 +28,13 @@ y_train = np.array(angles)
 
 from keras.models import Sequential
 from keras.layers.core import Dense, Activation, Flatten, Lambda
+from keras.layers import Cropping2D
 from keras.layers.convolutional import Conv2D
 from keras.layers.pooling import MaxPooling2D
 
 model = Sequential()
 model.add(Lambda(lambda x: (x / 255.0) - 0.5, input_shape=(160, 320, 3)))
+model.add(Cropping2D(cropping=((70, 20), (0,0))))
 model.add(Conv2D(filters=32, kernel_size=(3,3), activation='relu'))
 model.add(MaxPooling2D())
 model.add(Conv2D(filters=32, kernel_size=(3,3), activation='relu'))
