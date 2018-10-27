@@ -25,9 +25,15 @@ y_train = np.array(angles)
 
 from keras.models import Sequential
 from keras.layers.core import Dense, Activation, Flatten, Lambda
+from keras.layers.convolutional import Conv2D
+from keras.layers.pooling import MaxPooling2D
 
 model = Sequential()
 model.add(Lambda(lambda x: (x / 255.0) - 0.5, input_shape=(160, 320, 3)))
+model.add(Conv2D(32, 3, 3, activation='relu'))
+model.add(MaxPooling2D())
+model.add(Conv2D(32, 3, 3, activation='relu'))
+model.add(MaxPooling2D())
 model.add(Flatten())
 model.add(Dense(1))
 
