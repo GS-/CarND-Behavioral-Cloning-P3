@@ -14,22 +14,21 @@ angles = []
 for line in lines:
     path = line[0]
     file_name = path.split('/')[-1]
-    new_path = f'{base_dir}/{file_name}'
+    new_path = f'{base_dir}/IMG/{file_name}'
     image = cv2.imread(new_path)
     angle = float(line[3])
     images.append(image)
     angles.append(angle)
 
-
 X_train = np.array(images)
 y_train = np.array(angles)
 
 from keras.models import Sequential
-from keras.layers.core import Dense, Activation, Flatten
+from keras.layers.core import Dense, Activation, Flatten, Lambda
 
 model = Sequential()
-
-model.add(Flatten(input_shape=(32, 32, 3)))
+model.add(Lambda(lambda x: (x / 255.0) - 0.5, input_shape=(160, 320, 3)))
+model.add(Flatten())
 model.add(Dense(1))
 
 model.compile(
@@ -41,9 +40,10 @@ model.compile(
 history = model.fit(
     X_train,
     y_train,
-    epochs=3,
+    #epochs=3,
     validation_split=0.2,
     shuffle=True,
+    nb_epoch=9,
 )
 
 model.save('model.h5')
