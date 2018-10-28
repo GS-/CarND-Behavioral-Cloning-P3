@@ -76,6 +76,7 @@ BATCH_SIZE = 500
 TRAIN_STEPS = (len(train_samples) // BATCH_SIZE) + 1
 VALIDATE_STEPS = (len(validation_samples) // BATCH_SIZE) + 1
 EPOCHS=5
+DROPOUT_RATE=0.15
 print(TRAIN_STEPS)
 #sys.exit()
 
@@ -111,54 +112,96 @@ from keras.layers import Cropping2D
 from keras.layers.convolutional import Conv2D
 from keras.layers.pooling import MaxPooling2D
 
-model = Sequential()
-model.add(Lambda(lambda x: (x / 255.0) - 0.5, input_shape=(160, 320, 3)))
-model.add(Cropping2D(cropping=((70, 20), (0,0))))
-model.add(Conv2D(filters=24, kernel_size=(5,5), strides=(2,2), activation='relu'))
-model.add(Conv2D(filters=36, kernel_size=(5,5), strides=(2,2), activation='relu'))
-model.add(Conv2D(filters=48, kernel_size=(5,5), strides=(2,2), activation='relu'))
-model.add(Dropout(0.2))
-model.add(Conv2D(filters=64, kernel_size=(3,3), activation='relu'))
-model.add(Conv2D(filters=64, kernel_size=(3,3), activation='relu'))
-model.add(MaxPooling2D())
-model.add(Dropout(0.2))
-model.add(Flatten())
-model.add(Dense(100))
-model.add(Activation('relu'))
-model.add(Dense(50))
-model.add(Activation('relu'))
-model.add(Dropout(0.2))
-model.add(Dense(10))
-model.add(Activation('relu'))
-model.add(Dense(1))
+def first_model():
+    model = Sequential()
+    model.add(Lambda(lambda x: (x / 255.0) - 0.5, input_shape=(160, 320, 3)))
+    model.add(Cropping2D(cropping=((70, 20), (0,0))))
+    model.add(Conv2D(filters=24, kernel_size=(5,5), strides=(2,2), activation='relu'))
+    model.add(Conv2D(filters=36, kernel_size=(5,5), strides=(2,2), activation='relu'))
+    model.add(Conv2D(filters=46, kernel_size=(5,5), strides=(2,2), activation='relu'))
+    model.add(Conv2D(filters=64, kernel_size=(3,3), activation='relu'))
+    model.add(Conv2D(filters=64, kernel_size=(3,3), activation='relu'))
+    model.add(Flatten())
+    model.add(Dense(100))
+    model.add(Dense(50))
+    model.add(Dense(10))
+    model.add(Dense(1))
+    return model
 
-model.summary()
-for layer in model.layers:
-    print(layer.get_output_at(0).get_shape().as_list())
 
-model.compile(
-    loss='mse',
-    optimizer='adam',
+def gs_model():
+    model = Sequential()
+    model.add(Lambda(lambda x: (x / 255.0) - 0.5, input_shape=(160, 320, 3)))
+    model.add(Cropping2D(cropping=((70, 20), (0,0))))
+    model.add(Conv2D(filters=24, kernel_size=(3,3), strides=(2,2), activation='relu'))
+    model.add(Dropout(DROPOUT_RATE))
+    model.add(Conv2D(filters=48, kernel_size=(4,4), strides=(1,1), activation='relu'))
+    model.add(Conv2D(filters=96, kernel_size=(5,5), strides=(2,2), activation='relu'))
+    model.add(Dropout(DROPOUT_RATE))
+    model.add(MaxPooling2D())
+    model.add(Dropout(DROPOUT_RATE))
+    model.add(Conv2D(filters=128, kernel_size=(3,3), activation='relu'))
+    model.add(Dropout(DROPOUT_RATE))
+    model.add(Conv2D(filters=256, kernel_size=(4,4), activation='relu'))
+    model.add(Dropout(DROPOUT_RATE))
+    model.add(MaxPooling2D())
+    model.add(Dropout(DROPOUT_RATE))
+    model.add(Flatten())
+    model.add(Dense(2000))
+    model.add(Activation('relu'))
+    model.add(Dense(1000))
+    model.add(Activation('relu'))
+    model.add(Dropout(DROPOUT_RATE))
+    model.add(Dense(500))
+    model.add(Dense(100))
+    model.add(Activation('relu'))
+    model.add(Dense(50))
+    model.add(Activation('relu'))
+    model.add(Dropout(DROPOUT_RATE))
+    model.add(Dense(10))
+    model.add(Activation('relu'))
+    model.add(Dense(1))
+    return model
+       
+
+# for layer in model.layers:
+#     print(layer.get_output_at(0).get_shape().as_list())
+
+
+def fit_model(model, model_save_name):
+    model.summary()
+    model.compile(
+        loss='mse',
+        optimizer='adam',
+    )
+
+
+    #history = model.fit(
+    #    X_train,
+    #    y_train,
+    #    epochs=3,
+    #    validation_split=0.25,
+    #    shuffle=True,
+    #)
+
+    history = model.fit_generator(
+        train_generator,
+        steps_per_epoch=TRAIN_STEPS,
+        validation_data=validation_generator,
+        validation_steps=VALIDATE_STEPS,
+        epochs=EPOCHS,
+    #    shuffle=True,
+    )
+
+    model.save(model_save_name)
+
+fit_model(
+    model=first_model(),
+    model_save_name='model-first.h5',
 )
 
 
-#history = model.fit(
-#    X_train,
-#    y_train,
-#    epochs=3,
-#    validation_split=0.25,
-#    shuffle=True,
-#)
-
-history = model.fit_generator(
-    train_generator,
-    steps_per_epoch=TRAIN_STEPS,
-    validation_data=validation_generator,
-    validation_steps=VALIDATE_STEPS,
-    epochs=EPOCHS,
-#    shuffle=True,
+fit_model(
+    model=gs_model(),
+    model_save_name='model-gs.h5',
 )
-
-
-
-model.save('model.h5')
