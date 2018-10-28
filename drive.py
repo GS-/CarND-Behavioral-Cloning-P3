@@ -45,7 +45,7 @@ class SimplePIController:
 
 
 controller = SimplePIController(0.1, 0.002)
-set_speed = 17
+set_speed = 20
 controller.set_desired(set_speed)
 
 
@@ -61,15 +61,9 @@ def telemetry(sid, data):
         # The current image from the center camera of the car
         imgString = data["image"]
         image = Image.open(BytesIO(base64.b64decode(imgString)))
-        print('One')  
-        print(type(image))
         image_array = np.array(image)
-        print('Two')  
-        print(type(image_array))
         
         cv2 = image_array[:, :, ::-1].copy()
-        print('TWO TWO')
-        print(type(cv2))
 
 #        test_image = Image.open(BytesIO(base64.b64decode(imgString)))
 #        r, g, b = cv2.split(test_image)
