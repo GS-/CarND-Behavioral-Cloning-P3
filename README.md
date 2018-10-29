@@ -227,15 +227,33 @@ To train the model I used a set of 18K images. During training I also performed 
 [//]: # (Image References)
 
 [image1]: ./examples/normal1.jpg "Normal Image"
-[image2]: ./examples/normal1.jpg "Normal Image"
+[image2]: ./examples/normal2.jpg "Normal Image"
 [image3]: ./examples/recovery1.jpg "Recovery Image"
-[image4]: ./examples/recovery1.jpg "Recovery Image"
+[image4]: ./examples/recovery2.jpg "Recovery Image"
 
+
+Normal Image
+
+![Normal Image](./examples/normal1.jpg)
+
+Normal Image
+
+![Normal Image 2][image2]
+
+
+Recovery Image
+
+![Recovery Image](./examples/recovery1.jpg)
+
+Recovery Image
+
+![Recovery Image 2][image4]
 
 ### Result Run
 
 
 Video of car driving in autonomous mode:
+
 ![Video of car driving in autonomous mode][video1]
 
 
