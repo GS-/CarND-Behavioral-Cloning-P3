@@ -231,25 +231,17 @@ To train the model I used a set of 18K images. During training I also performed 
 [image3]: ./examples/recovery1.jpg "Recovery Image"
 [image4]: ./examples/recovery2.jpg "Recovery Image"
 
-
-Normal Image
-
-![Normal Image](./examples/normal1.jpg)
-
 Normal Image
 
 ![Normal Image 2][image2]
-
 
 Recovery Image
 
 ![Recovery Image](./examples/recovery1.jpg)
 
-Recovery Image
+### Video of the car in autonomus mode
 
-![Recovery Image 2][image4]
-
-### Result Run
+<iframe width="420" height="315" src="./videos/video.mp4" frameborder="0" allowfullscreen></iframe>
 
 
 Video of car driving in autonomous mode:
