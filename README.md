@@ -228,9 +228,25 @@ To train the model I used a set of 18K images. During training I also performed 
 * I also cropped the image so that we training can focus on the lanes and ignore extra noise.
 * I didn't have to incorporate the left and right image into my model. My model have a fairly high accuracy with left and right images.
 
+#### 6. Here are some sample images captured.
+
+[//]: # (Video References)
+
+[video1]: ./video.mp4 "Result at 30mph"
+[video2]: ./video1.mp4 "Result at 20mph"
+
+[//]: # (Image References)
+
+[image1]: ./examples/normal1.jpg "Normal Image"
+[image2]: ./examples/normal1.jpg "Normal Image"
+[image3]: ./examples/recovery1.jpg "Recovery Image"
+[image4]: ./examples/recovery1.jpg "Recovery Image"
+
+
 ### Result Run
 
+
 Video of car driving in autonomous mode:
-![alt text][video1]
+![Video of car driving in autonomous mode][video1]
 
 
