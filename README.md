@@ -241,11 +241,7 @@ Recovery Image
 
 ### Video of the car in autonomus mode
 
-<iframe width="420" height="315" src="./videos/video.mp4" frameborder="0" allowfullscreen></iframe>
 
-
-Video of car driving in autonomous mode:
-
-![Video of car driving in autonomous mode][video1]
+![Link to the video][video1]
 
 
