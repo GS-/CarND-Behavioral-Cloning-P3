@@ -221,7 +221,7 @@ To train the model I used a set of 18K images. During training I also performed 
 
 [//]: # (Video References)
 
-[video1]: ./video1.mp4 "Result at 30mph"
+[video1]: ./videos/video.mp4 "Result at 30mph"
 [video2]: ./video1.mp4 "Result at 20mph"
 
 [//]: # (Image References)
